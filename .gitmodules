@@ -1,0 +1,3 @@
+[submodule "original-repo"]
+	path = original-repo
+	url = https://github.com/rjurney/enron-python-flask-cassandra-pig.git
