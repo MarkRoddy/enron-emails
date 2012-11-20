@@ -5,3 +5,7 @@ Mortar is a platform-as-a-service for Hadoop.  With Mortar, you can run jobs on 
 # Getting Started
 
 For help getting started with Mortar, check out the [Mortar Help](http://preview.help.mortardata.com/) site.
+
+# References
+http://hortonworks.com/blog/pig-as-duct-tape-part-three-tf-idf-topics-with-cassandra-python-streaming-and-flask/
+https://github.com/rjurney/enron-python-flask-cassandra-pig
