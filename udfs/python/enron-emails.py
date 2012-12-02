@@ -26,7 +26,7 @@ def tokenize(body):
   return "\t".join(no_shorts)
 
 
-# import nltk
+import nltk
 import re
 from lepl.apps.rfc3696 import Email, HttpUrl
 
