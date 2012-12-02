@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+mortar jobs:run enron-emails --clustersize 2 \
+    -p JARDIR=s3://net.ednit.lib/pig/jars \
+    -p INPUT=s3://net.ednit.datasets/enron-emails/enron.json \
+    -p OUTFILE=s3://net.ednit.datasets/enron-emails/topic-analysis

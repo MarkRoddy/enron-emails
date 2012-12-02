@@ -12,15 +12,15 @@
  */
 REGISTER '../udfs/python/enron-emails.py' USING streaming_python AS enronemails;
 
-/* AvroStorage */
-/* register /me/Software/pig/build/ivy/lib/Pig/avro-1.5.3.jar
-register /me/Software/pig/build/ivy/lib/Pig/json-simple-1.1.jar*/
--- register /me/Software/pig/contrib/piggybank/java/piggybank.jar
+-- JSON loading approach taken from here:
+-- http://eric.lubow.org/2011/hadoop/pig-queries-parsing-json-on-amazons-elastic-map-reduce-using-s3-data/
+REGISTER $JARDIR/google-collect-1.0.jar;
+REGISTER $JARDIR/json-simple-1.1.jar;
+REGISTER $JARDIR/elephant-bird-1.2.1-SNAPSHOT.jar;
+DEFINE JsonLoader com.twitter.elephantbird.PIG.LOAD.JsonLoader();
+emails = load '$INPUT' using JsonLoader()
+  AS (body, from, tos, ccs, bccs, date, message_id, subject);
 
-
-define AvroStorage org.apache.pig.piggybank.storage.avro.AvroStorage();
-
-emails = load 'http://s3.amazonaws.com/rjurney.public/enron.avro' using AvroStorage();
 emails = filter emails by message_id is not null;
 
 /* Limit to 1,000 documents for local mode, or go bake a cake in the meanwhile */
@@ -73,6 +73,7 @@ per_message_cassandra = foreach (group tfidf_all by message_id) {
     generate group, top_10_topics.(score, value);
 }
 
+STORE per_message_cassandra into '$OUTFILE' using PigStorage();
 -- store per_message_cassandra into 'cassandra://enron/email_topics' USING CassandraStorage();
 
 /* This will give you some message_id keys to fetch in Cassandra, and some message bodies to compare topics to. */
